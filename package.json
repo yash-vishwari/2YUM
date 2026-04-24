@@ -1,0 +1,20 @@
+{
+  "name": "2yum",
+  "version": "1.0.0",
+  "description": "A comprehensive full-stack food delivery application built using MERN stack.",
+  "homepage": "https://github.com/yash-vishwari/2YUM#readme",
+  "bugs": {
+    "url": "https://github.com/yash-vishwari/2YUM/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yash-vishwari/2YUM.git"
+  },
+  "license": "ISC",
+  "author": "YV",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
