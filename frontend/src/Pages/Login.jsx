@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import CravingsLogo from "../assets/CravingsLogo.png";
 import * as YUP from "yup";
 import api from "../config/api.config.js";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 
-function Login() {
+const Login =()=> {
+  let navigate = useNavigate();
+
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -13,7 +17,6 @@ function Login() {
     const { name, value } = e.target;
 
     setUserData((prev) => ({ ...prev, [name]: value }));
-    console.log(userData);
   };
 
   const handleSumbit = async (e) => {
@@ -26,10 +29,12 @@ function Login() {
 
     try {
       const res = await api.post("/auth/login", payload);
-      window.alert(res.data.message);
-      console.log(res.data);
-    } catch (e) {
-      console.log(e);
+      sessionStorage.setItem("UserData", JSON.stringify(res.data.data));
+      toast.success(res.data.message);
+
+      navigate("/user/dashboard");
+    } catch (error) {
+      toast.error(error.response?.data.message || "Invalid Email or Password");
     }
   };
 
@@ -76,7 +81,7 @@ function Login() {
             </div>
           </div>
 
-          <button className="bg-[#0095F6] py-4 text-white text-xl rounded-xl cursor-pointer caret-transparent">
+          <button className="bg-[#EB622C] py-4 text-white text-xl rounded-xl cursor-pointer caret-transparent">
             Login
           </button>
         </form>
