@@ -1,0 +1,54 @@
+
+import express from "express";
+import Authrouter from "./src/routers/auth.route.js";
+import PublicRouter from "./src/routers/public.route.js";
+import UserRouter from "./src/routers/user.route.js"
+import connectDB from "./src/config/dbConnection.config.js";
+import cookieParser from "cookie-parser";
+import morgan from "morgan";
+import cors from "cors";
+import cloudinary from "./src/config/cloudinary.config.js";
+
+const app = express();
+
+
+app.use(cors({origin:"http://localhost:5173",credentials:true}))
+app.use(express.json());
+
+app.use(morgan("dev"));
+app.use(cookieParser());
+
+app.get("/", (req, res) => {
+  console.log("Server Started");
+  res.json({ message: "Welcome to my First Backend Project" });
+});
+app.use("/auth", Authrouter);
+app.use("/public", PublicRouter);
+app.use("/user", UserRouter);
+// Default API
+
+//Default Error Handler
+
+app.use((err, req, res, next) => {
+  const ErrMessage = err.message || "Internal Server Error";
+
+  const ErrStatusCode = err.statusCode || 500;
+  res.status(ErrStatusCode).json({ message: ErrMessage });
+});
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, async () => {
+  console.log("Server started on Port :", PORT);
+  connectDB();
+
+  try{
+    const result =await cloudinary.api.ping();
+    console.log("Cloudinary Connected :")
+    console.log(result)
+  }catch(error){
+
+    console.log(error.message);
+    process.exit(1);
+
+  }
+});

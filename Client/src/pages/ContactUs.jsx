@@ -1,17 +1,15 @@
 import React from "react";
-import api from "../config/api.config.js";
 import * as YUP from "yup";
 
 import { useState } from "react";
 import CravingsLogo from "../assets/CravingsLogo.png";
 
-const Register = () => {
+const ContactUs = () => {
   const [userData, setUserData] = useState({
     fullName: "",
     email: "",
-    password: "",
-    dob: "",
-    gender: "",
+
+  
     phone: "",
   });
 
@@ -24,27 +22,15 @@ const Register = () => {
 
   const phoneRegExp = /^\d{10}$/;
 
-  const passwordRegExp =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>_+\-=\[\]\\\/~`])[A-Za-z\d!@#$%^&*(),.?":{}|<>_+\-=\[\]\\\/~`]{8,}$/;
-
   const validationSchema = YUP.object({
     fullName: YUP.string().required("* Name is required"),
     email: YUP.string()
       .required("* Email is required")
       .email("Invalid Email Format"),
-    dob: YUP.date()
-      .typeError("* Dob is required")
-      .required("* Dob is required"),
-    gender: YUP.string().required("* Gender is required"),
+   
     phone: YUP.string()
       .matches(phoneRegExp, "* Please enter a valid phone number format")
       .required("* phone no is required"),
-    password: YUP.string()
-      .matches(
-        passwordRegExp,
-        "* Password mush contain a lowercase,uppercase,digit and one special character and mmin length 8",
-      )
-      .required("* password is required"),
   });
 
   const Validate = async () => {
@@ -69,26 +55,24 @@ const Register = () => {
     e.preventDefault();
 
     const isValid = await Validate();
-    if (!isValid) {
+    if (isValid) {
+      console.log("Form Submitted");
+      window.message("Registration Successfull !!");
+
+      try{
+        const payload = {
+          fullName:userData.fullName,
+          phone:userData.phone,
+          email:userData.email,
+        };
+      }
+
+      catch(error){
+        console.log(error.response?.data.message || "Invalid Email or Password");
+
+      }
+    } else {
       window.alert("Invalid user data");
-      return;
-    }
-
-    const payload = {
-      fullName: userData.fullName,
-      email: userData.email,
-      dob: userData.dob,
-      gender: userData.gender,
-      password: userData.password,
-      phone: userData.phone,
-    };
-    console.log(payload);
-
-    try {
-      const res = await api.post("auth/register", payload);
-      alert(res.data.message);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -130,18 +114,6 @@ const Register = () => {
           </div>
 
           <div>
-            <label htmlFor="dob">Date Of Birth</label>
-            <input
-              id="dob"
-              type="date"
-              name="dob"
-              value={userData.dob}
-              onChange={updateUserDate}
-            />
-            {errors.dob && <div className="error">{errors.dob} </div>}
-          </div>
-
-          <div>
             <label htmlFor="phone">Phone Number</label>
             <input
               id="phone"
@@ -154,38 +126,14 @@ const Register = () => {
             {errors.phone && <div className="error">{errors.phone} </div>}
           </div>
 
+         
           <div>
-            <label htmlFor="gender">Gender</label>
-            <select
-              name="gender"
-              id="gender"
-              onChange={updateUserDate}
-              value={userData.gender}
-            >
-              <option value="">Gender</option>
-              <option value="Male">Male</option>
-
-              <option value="Female">Female</option>
-
-              <option value="Other">Other</option>
-            </select>
-            {errors.gender && <div className="error">{errors.gender} </div>}
-          </div>
-
-          <div className="w-80">
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="text"
-              name="password"
-              value={userData.password}
-              onChange={updateUserDate}
-            />
-            {errors.password && <div className="error">{errors.password} </div>}
+            <label htmlFor="">Subject</label>
+            <input type="text" name="subject" />
           </div>
 
           <button className="bg-[#0095F6] py-2 px-20 rounded-[12px] text-white text-xl outline-0  w-80">
-            Sign Up
+            Submit
           </button>
         </form>
       </div>
@@ -193,4 +141,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default ContactUs;
