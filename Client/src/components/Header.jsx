@@ -34,7 +34,7 @@ function Header() {
                   </div>
                   <div className="flex items-center gap-2 h-14 overflow-hidden">
                     <img
-                      src={userData.photo}
+                      src={userData.photo.url}
                       alt=""
                       className="h-14 w-14 rounded-full object-cover "
                     />
