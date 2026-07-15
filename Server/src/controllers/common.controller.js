@@ -22,6 +22,8 @@ export const EditUserProfile = async (req, res, next) => {
       return next(error);
     }
 
+
+    
     if (newPhoto) {
       existingUser.photo?.publicId &&
         (await cloudinary.uploader.destroy(existingUser.photo.publicId));
