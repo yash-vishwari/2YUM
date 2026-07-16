@@ -132,6 +132,8 @@ export const SendOtp = async (req, res, next) => {
       email,
       otp: hashedOTP,
     });
+
+    
     await sendOTPEmail(email, newOTP);
 
     res.status(200).json({ message: `OTP sent on '${email}'` });
