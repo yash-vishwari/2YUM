@@ -92,6 +92,8 @@ const CarouselComponent = () => {
           />
         ))}
       </div>
+
+      
     </div>
   );
 };
