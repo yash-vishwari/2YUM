@@ -119,6 +119,9 @@ import Card from "./Card.jsx";
 const CardSection = () => {
   return (
     <>
+
+
+    
       {/* <div className="ps-[165px] text-[30px] text-white pt-3">
         <p className="font-bold ">Featured Restaurant</p>
         <p>3 restaurants available</p>
