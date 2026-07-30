@@ -13,6 +13,9 @@ const ForgotPasswordModal = ({ open, onClose }) => {
     confirmNewPassword: "",
   });
 
+
+
+  
   const [isLoading, setIsLoading] = useState(false);
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
